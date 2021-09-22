@@ -1,0 +1,16 @@
+<app-modal-component title="{{title}}"
+                (save)="onSave()"
+                (cancel)="onCancel()"
+                button="save">
+  <form [formGroup]="form">
+    <div class="form-group">
+      <label for="dateOfBirth">Name</label>
+      <div class="input-group">
+        <input class="form-control"
+               placeholder="Department name"
+               formControlName="Name"
+               ngbAutofocus>
+      </div>
+    </div>
+  </form>
+</app-modal-component>

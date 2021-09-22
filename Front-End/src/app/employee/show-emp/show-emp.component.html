@@ -1,0 +1,42 @@
+<div class="modal-header">
+    <h4 class="modal-title"
+        id="modal-basic-title">Edit Employee</h4>
+    <button type="button"
+            class="close"
+            aria-label="Close"
+            (click)="activeModal.dismiss('cancel')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="form">
+      <div class="form-group">
+        <div class="form-group">
+          <label for="dateOfBirth">Department</label>
+          <div class="input-group">
+            <select class="form-control"
+                    formControlName="DepartmentId"
+                    ngbAutofocus>
+              <option *ngFor="let dep of departments"
+                      [ngValue]="dep.Id">
+                {{dep.Name}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <label for="dateOfBirth">Name</label>
+        <div class="input-group">
+          <input class="form-control"
+                 placeholder="Employee name"
+                 formControlName="Name">
+        </div>
+      </div>
+    </form> 
+  </div>
+  <div class="modal-footer">
+    <button type="button"
+            class="btn btn-success"
+            [disabled]="form.invalid"
+            (click)="onSave()">Save</button>
+  </div>
+  
