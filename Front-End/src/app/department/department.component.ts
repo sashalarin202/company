@@ -33,4 +33,18 @@ export class DepartmentComponent implements OnInit {
       )
     })
   }
+
+  deleteClick(item:number){
+    console.log(item)
+    if(confirm("Are you sure?")){
+      this.departmentRepo.delete(item).subscribe(data=>{
+        this.departmentRepo.getList().subscribe(
+          (department)=>{
+            this.departments=department;
+          }
+        );
+        alert(data.toString())
+      })
+    }
+  }
 }
