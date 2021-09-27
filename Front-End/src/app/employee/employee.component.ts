@@ -43,6 +43,22 @@ export class EmployeeComponent implements OnInit {
     })
   }
 
+  async onEditClick(empId: number) {
+    const empIndex = this.employees.findIndex(e => e.Id === empId);
+    if (empIndex < 0) {
+      throw new Error(`Employee with ID ${empId} not found`);
+    }
+    try {
+      const editedEmp = await this.showEmpService.edit(this.departments, this.employees[empIndex]);
+      this.employees[empIndex] = editedEmp;
+      this.employeeRepo.update(editedEmp).subscribe()
+    } catch (ex) {
+      if (ex !== 'cancel') {
+        throw ex;
+      }
+    }
+  }
+
   deleteClick(item:number){
     console.log(item)
     if(confirm("Are you sure?")){

@@ -53,13 +53,13 @@ namespace WebApplication1.Controllers
 
                 return "Added Succesfully!!";
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                return "Faild to Add!!";
+                return $"Faild to Add!! {ex}";
             }
         }
-        public string Put(Department dep)
+        public IHttpActionResult Put(Department dep)
         {
             try
             {
@@ -78,12 +78,12 @@ namespace WebApplication1.Controllers
                     da.Fill(table);
                 }
 
-                return "Update Succesfully!!";
+                return Ok("Update Succesfully!!");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                return "Faild to Update!!";
+                return InternalServerError(ex);
             }
         }
 
@@ -107,10 +107,10 @@ namespace WebApplication1.Controllers
 
                 return "Delete Succesfully!!";
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                return "Faild to Delete!!";
+                return $"Faild to Delete!! {ex}";
             }
         }
 

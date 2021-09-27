@@ -60,22 +60,20 @@ namespace WebApplication1.Controllers
 
                 return "Added Succesfully!!";
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return "Added Faild";
+                return $"Added Faild {ex}";
             }
         }
-        public string Put(Employee emp)
+        public IHttpActionResult Put(Employee emp)
         {
             try
             {
                 string query = @"
                     update dbo.Employee set
-                    EmployeeName='" + emp.Name + @"'
+                    Name='" + emp.Name + @"'
                     ,DepartmentId='" + emp.DepartmentId + @"'
-                    ,DateOfJoining='" + emp.DateOfJoining + @"'
-                    ,PhotoFileName='" + emp.PhotoFileName + @"'
-                    where EmployeeId=" + emp.Id + @"
+                    where Id=" + emp.Id + @"
                     ";
                 DataTable table = new DataTable();
                 using (var con = new SqlConnection(ConfigurationManager.
@@ -87,12 +85,12 @@ namespace WebApplication1.Controllers
                     da.Fill(table);
                 }
 
-                return "Update Succesfully!!";
+                return Ok("Update Succesfully!!");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                return "Faild to Update!!";
+                return InternalServerError(ex);
             }
         }
 
@@ -154,9 +152,9 @@ namespace WebApplication1.Controllers
 
                 return filename;
             }
-            catch(Exception)
+            catch(Exception ex)
             {
-                return "anonymous.png";
+                return $"anonymous.png {ex}";
             }
         }
 

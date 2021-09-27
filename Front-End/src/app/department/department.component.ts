@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscriber } from 'rxjs';
 import { DepartmentRepo } from 'src/app/shared.service';
 import { Department } from '../contracts';
 import { ShowDepService } from './show-dep/show-dep.service';
-
 
 @Component({
   selector: 'app-department',
@@ -32,6 +32,22 @@ export class DepartmentComponent implements OnInit {
         () => { this.departments.push(department) }
       )
     })
+  }
+
+  async onEditClick(depId: number) {
+    const depIndex = this.departments.findIndex(d => d.Id === depId);
+    if (depIndex < 0) {
+      throw new Error(`Department with ID ${depId} not found`);
+    }
+    try {
+      const editedDep =  await this.showDepService.edit(this.departments[depIndex]);
+      this.departments[depIndex] = editedDep;
+      this.departmentRepo.update(editedDep).subscribe()
+    } catch (ex) {
+      if (ex !== 'cancel') {
+        throw ex;
+      }
+    }
   }
 
   deleteClick(item:number){
