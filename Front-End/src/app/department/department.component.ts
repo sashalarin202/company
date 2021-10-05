@@ -29,9 +29,15 @@ export class DepartmentComponent implements OnInit {
   onAddDepartment() {
     this.showDepService.add().then(department => {
       this.departmentRepo.add(department).subscribe(
-        () => { this.departments.push(department) }
-      )
-    })
+        () => { this.departments.push(department)
+          this.departmentRepo.getList().subscribe(
+            (department)=>{
+              this.departments=department;
+            }
+          );
+        }
+      );
+    });
   }
 
   async onEditClick(depId: number) {
@@ -42,7 +48,7 @@ export class DepartmentComponent implements OnInit {
     try {
       const editedDep =  await this.showDepService.edit(this.departments[depIndex]);
       this.departments[depIndex] = editedDep;
-      this.departmentRepo.update(editedDep).subscribe()
+      this.departmentRepo.update(editedDep).subscribe();
     } catch (ex) {
       if (ex !== 'cancel') {
         throw ex;

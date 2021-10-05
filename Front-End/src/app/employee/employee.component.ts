@@ -38,7 +38,13 @@ export class EmployeeComponent implements OnInit {
   onAddEmployee(){
     this.showEmpService.add(this.departments).then(employee=>{
       this.employeeRepo.add(employee).subscribe(
-        ()=>{this.employees.push(employee)}
+        ()=>{this.employees.push(employee);
+          this.employeeRepo.getList().subscribe(
+            (employees)=>{
+              this.employees=employees;
+            }
+          );
+        }
       )
     })
   }

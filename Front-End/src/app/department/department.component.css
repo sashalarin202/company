@@ -1,0 +1,7 @@
+th:last-child {
+  width: 110px;
+}
+
+button:last-child {
+  margin-left: 10px;
+}
